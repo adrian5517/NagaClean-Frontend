@@ -35,7 +35,7 @@ export default function Signup() {
       Alert.alert("Success", "Account created successfully!", [
         {
           text: "OK",
-          onPress: () => router.push('/login'), // ✅ Navigate after confirmation
+          onPress: () => router.push('/(auth)'), // ✅ Navigate after confirmation
         },
       ]);
     }
@@ -50,7 +50,7 @@ export default function Signup() {
         {/* Header */}
         <View style={styles.header}>
           <Image
-            source={require('../../assets/images/title-logo.png')}
+            source={require('../../assets/images/nagacleanapp.png')}
             style={styles.logo}
             resizeMode="contain"
           />
