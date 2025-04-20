@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, View, Platform, Alert } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import { StyleSheet, View, Alert} from 'react-native';
+import MapView, { Marker} from 'react-native-maps';
 import * as Location from 'expo-location';
-const Truck = require('../../assets/images/trucktopView.png')
+const Truck = require('../../assets/images/trucktopView.png');
 
-
-
-export default function Create() {
+export default function create() {
   const [location, setLocation] = useState(null);
   const mapRef = useRef(null);
 
@@ -21,13 +19,15 @@ export default function Create() {
       let loc = await Location.getCurrentPositionAsync({});
       setLocation(loc.coords);
 
-      // Optional: Animate map to user location
-      mapRef.current?.animateToRegion({
-        latitude: loc.coords.latitude,
-        longitude: loc.coords.longitude,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      });
+      // Animate map to user location if ref is available
+      if (mapRef.current) {
+        mapRef.current.animateToRegion({
+          latitude: loc.coords.latitude,
+          longitude: loc.coords.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        });
+      }
     })();
   }, []);
 
@@ -45,6 +45,7 @@ export default function Create() {
         showsUserLocation={true}
         showsMyLocationButton={true}
         zoomEnabled={true}
+        image={Truck}
       >
         {location && (
           <Marker

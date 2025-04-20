@@ -14,7 +14,8 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: 'rgba(0, 30, 0, 0.7)',
           borderTopWidth: 0,
-          height: 75,
+          height: 70,
+          paddingTop:10,
           position: 'absolute',
           bottom: 20,
           left: 20,
@@ -41,19 +42,7 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="create"
-        options={{
-          title: 'Route',
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? 'location' : 'location-outline'}
-              size={24}
-              color={color}
-            />
-          ),
-        }}
-      />
+     
       <Tabs.Screen
         name="schedule"
         options={{
@@ -67,6 +56,20 @@ export default function TabLayout() {
           ),
         }}
       />
+       <Tabs.Screen
+        name="create"
+        options={{
+          title: 'Route',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name={focused ? 'location' : 'location-outline'}
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+      
       <Tabs.Screen
         name="message"
         options={{

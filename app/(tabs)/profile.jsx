@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import COLORS from '@/constant/colors';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function Profile() {
+export default function profile() {
   const { logout } = useAuthStore();
   const router = useRouter();
 

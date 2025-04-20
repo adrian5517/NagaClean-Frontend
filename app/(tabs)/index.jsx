@@ -7,14 +7,14 @@ import {
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Colors from '../../constant/colors';
-import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import COLORS from '../../constant/colors';
+import { router } from 'expo-router';
 
 export default function Home() {
-  const navigation = useNavigation();
+
   const [username, setUsername] = useState('');
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function Home() {
     <View style={{ flex: 1 }}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity >
           <Ionicons name="arrow-back" size={24} color={Colors.white} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Dashboard</Text>
@@ -101,6 +101,10 @@ export default function Home() {
     </View>
     </View>
     </View>
+
+    <TouchableOpacity style={styles.viewLocationBtn} onPress={() => router.replace('create')}>
+  <Text style={styles.viewLocationText}>📍 View My Location</Text>
+</TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -198,7 +202,7 @@ const styles = StyleSheet.create({
   },
   
   requestDetail: {
-    fontSize: 14,
+    fontSize: 15,
     color: Colors.textPrimary,
     fontWeight:500,
     marginBottom: 4,
@@ -229,5 +233,17 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 6,
     overflow: 'hidden',
-  }
+  },
+  viewLocationBtn: {
+    marginTop: 14,
+    backgroundColor: Colors.primary,
+    paddingVertical: 10,
+    borderRadius: 6,
+    alignItems: 'center',
+  },
+  viewLocationText: {
+    color: Colors.white,
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
 });
