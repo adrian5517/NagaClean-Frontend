@@ -15,7 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../constant/colors";
 import { Link } from "expo-router";
 import { useAuthStore } from "../../store/authStore";
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
   const [email, setEmail] = useState("");

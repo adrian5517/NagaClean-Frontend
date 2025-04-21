@@ -1,89 +1,101 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { create } from "zustand";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { create } from 'zustand';
 
 export const useAuthStore = create((set) => ({
-    user: null,
-    token: null,
-    isLoading: false,
+  user: null,
+  token: null,
+  profilePictureLink: null, // Store the link to the profile picture
+  isLoading: false,
 
-    setUser: (user) => set({ user }),
+  setUser: (user) => set({ user }),
 
-    register: async (username, email, password) => {
-        set({ isLoading: true });
+  register: async (username, email, password, profilePictureLink) => {
+    set({ isLoading: true });
 
-        try {
-            const response = await fetch("https://rentify-server-ge0f.onrender.com/api/auth/signup", { // Replace with your actual local IP
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ username, email, password }),
-            });
+    try {
+      const response = await fetch("http://192.168.100.73:10000/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password, profilePictureLink }), // Include profilePictureLink in the body
+      });
 
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.message || "Something went wrong");
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Something went wrong");
 
-            await AsyncStorage.setItem("user", JSON.stringify(data.user));
-            await AsyncStorage.setItem("token", data.token);
+      // Store user, token, and profile picture link (URL)
+      await AsyncStorage.setItem("user", JSON.stringify(data.user));
+      await AsyncStorage.setItem("token", data.token);
 
-            set({ token: data.token, user: data.user, isLoading: false });
+      // Store specific fields
+      await AsyncStorage.setItem("username", data.user.username || "");
+      await AsyncStorage.setItem("name", data.user.name || "");
+      await AsyncStorage.setItem("profilePictureLink", data.user.profilePictureLink || ""); // Store link
 
-            return { success: true };
-        } catch (error) {
-            set({ isLoading: false });
-            return { success: false, error: error.message };
-        }
-    },
+      set({
+        token: data.token,
+        user: data.user,
+        profilePictureLink: data.user.profilePictureLink || "", // Save the link to profile picture in state
+        isLoading: false,
+      });
 
-    login: async(email , password) => {
-        set({ isLoading: true});
+      return { success: true };
+    } catch (error) {
+      set({ isLoading: false });
+      return { success: false, error: error.message };
+    }
+  },
 
-        try {
-           const response = await fetch("https://rentify-server-ge0f.onrender.com/api/auth/login", {
-            method:"POST",
-            headers:{
-                "Content-Type": "application/json"
-            },
-            body:JSON.stringify({
-                email,
-                password
-            }),
-           });
+  login: async (email, password) => {
+    set({ isLoading: true });
 
-           const data = await response.json();
-           if(!response.ok) throw new Error(data.message || "Something went wrong");
+    try {
+      const response = await fetch("http://192.168.100.73:10000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-           await AsyncStorage.setItem("user", JSON.stringify(data.user))
-           await AsyncStorage.setItem("token", data.token);
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Something went wrong");
 
-           set({token:data.token , user:data.user, isLoading:false});
-           return{success: true}
-            
-        } catch (error) {
-            return{success:false, error:error.message};
-            
-        }
-    },
+      // Store user, token, and profile picture link (URL)
+      await AsyncStorage.setItem("user", JSON.stringify(data.user));
+      await AsyncStorage.setItem("token", data.token);
 
-    checkAuth: async()=>{
-        try {
-            const token = await AsyncStorage.getItem("token");
-            const userJson = await AsyncStorage.getItem("user")
-            const user = userJson ? JSON.parse(userJson) : null;
+      // Store specific fields
+      await AsyncStorage.setItem("username", data.user.username || "");
+      await AsyncStorage.setItem("name", data.user.name || "");
+      await AsyncStorage.setItem("profilePictureLink", data.user.profilePictureLink || ""); // Store link
 
-            set({token , user})
-        } catch (error) {
-            console.log("Auth check failed" , error)
-            
-        }
-    },
+      set({
+        token: data.token,
+        user: data.user,
+        profilePictureLink: data.user.profilePictureLink || "", // Save the link in state
+        isLoading: false,
+      });
 
-    logout: async()=> {
-       
-            await AsyncStorage.removeItem("token")
-            await AsyncStorage.removeItem("user");
-            set({token:null,user: null})
-            
-        
-    },
+      return { success: true };
+    } catch (error) {
+      set({ isLoading: false });
+      return { success: false, error: error.message };
+    }
+  },
+
+  checkAuth: async () => {
+    try {
+      const token = await AsyncStorage.getItem("token");
+      const userJson = await AsyncStorage.getItem("user");
+      const user = userJson ? JSON.parse(userJson) : null;
+      const profilePictureLink = await AsyncStorage.getItem("profilePictureLink");
+
+      set({ token, user, profilePictureLink }); // Load profilePictureLink along with token and user
+    } catch (error) {
+      console.log("Auth check failed", error);
+    }
+  },
+
+  logout: async () => {
+    await AsyncStorage.multiRemove(["token", "user", "username", "name", "profilePictureLink"]); // Remove profilePictureLink from AsyncStorage
+    set({ token: null, user: null, profilePictureLink: null }); // Clear profilePictureLink from state
+  },
 }));

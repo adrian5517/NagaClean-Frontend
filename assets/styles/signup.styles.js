@@ -1,13 +1,15 @@
 import { StyleSheet } from "react-native";
 import COLORS from "../../constant/colors";
-import { startTransition } from "react";
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
     backgroundColor: COLORS.background,
-    padding: 13,
+  },
+  scrollViewContent: {
+    flexGrow: 1,
     justifyContent: "center",
+    padding: 20,
   },
   card: {
     backgroundColor: COLORS.cardBackground,
@@ -23,7 +25,7 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: "center",
-    marginBottom: 40,
+    marginBottom: 20,
   },
   title: {
     fontSize: 32,
@@ -32,19 +34,24 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     marginBottom: 8,
   },
-  logo:{
-    width:250,
-    marginBottom:8,
-    
-
+  logo: {
+    width: 200,
+    height: 100,
+    resizeMode: "contain",
+    marginBottom: 4,
   },
   subtitle: {
     fontSize: 16,
     color: COLORS.textSecondary,
     textAlign: "center",
   },
-  formContainer: { marginBottom: 35 },
-  inputGroup: { marginBottom: 20 },
+  formContainer: {
+    paddingHorizontal: 10,
+    width: '100%',
+  },
+  inputGroup: {
+    marginBottom: 16,
+  },
   label: {
     fontSize: 14,
     marginBottom: 8,
@@ -60,20 +67,24 @@ const styles = StyleSheet.create({
     borderColor: COLORS.border,
     paddingHorizontal: 12,
   },
-  inputIcon: { marginRight: 10 },
+  inputIcon: {
+    marginRight: 10,
+  },
   input: {
     flex: 1,
     height: 48,
     color: COLORS.textDark,
   },
-  eyeIcon: { padding: 8 },
+  eyeIcon: {
+    padding: 8,
+  },
   button: {
     backgroundColor: COLORS.primary,
     borderRadius: 12,
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 16,
+    marginTop: 8,
     shadowColor: COLORS.black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
