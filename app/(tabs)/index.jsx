@@ -52,7 +52,7 @@ export default function Home() {
   // Fetch pending pickup requests
   const fetchPendingPickups = async () => {
     try {
-      const response = await fetch('http://192.168.100.73:10000/api/pickups/pending');
+      const response = await fetch('https://nagappon-server.onrender.com/api/pickups/pending');
       const data = await response.json();
       setPendingPickups(data);
     } catch (error) {
@@ -69,7 +69,7 @@ export default function Home() {
   // Update pickup status
   const updateStatus = async (id, newStatus) => {
     try {
-      await fetch(`http://192.168.100.73:10000/api/pickups/${id}`, {
+      await fetch(`https://nagappon-server.onrender.com/api/pickups/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
