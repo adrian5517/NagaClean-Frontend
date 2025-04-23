@@ -13,7 +13,7 @@ export const useAuthStore = create((set) => ({
     set({ isLoading: true });
 
     try {
-      const response = await fetch("http://192.168.100.73:10000/api/auth/signup", {
+      const response = await fetch("https://nagappon-server.onrender.com/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password, profilePictureLink }), // Include profilePictureLink in the body
@@ -49,7 +49,7 @@ export const useAuthStore = create((set) => ({
     set({ isLoading: true });
 
     try {
-      const response = await fetch("http://192.168.100.73:10000/api/auth/login", {
+      const response = await fetch("https://nagappon-server.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
