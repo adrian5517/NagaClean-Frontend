@@ -41,7 +41,7 @@ export default function Create() {
   useEffect(() => {
     const fetchPickupLocations = async () => {
       try {
-        const response = await fetch('http://192.168.100.73:10000/api/pickups'); // Replace with your actual IP + port
+        const response = await fetch('https://nagappon-server.onrender.com/api/pickups'); // Replace with your actual IP + port
         const data = await response.json();
         setPickupLocations(data);
       } catch (error) {

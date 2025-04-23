@@ -26,7 +26,7 @@ export default function Schedule() {
   const [modalVisible, setModalVisible] = useState(false);
   const [status, setStatus] = useState('');
   const [showAll, setShowAll] = useState(false);
-  const baseUrl = 'http://192.168.100.73:10000/api/pickups';
+  const baseUrl = 'https://nagappon-server.onrender.com/api/pickups';
 
   useEffect(() => {
     fetchPickups();
