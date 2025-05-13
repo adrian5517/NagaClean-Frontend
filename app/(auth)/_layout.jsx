@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react'
 import { Stack, useRouter, useSegments } from 'expo-router'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -10,38 +9,29 @@ export default function AuthLayout() {
   const router = useRouter();
   const segments = useSegments();
 
-  const {checkAuth,user,token} = useAuthStore()
+  const {checkAuth, user, token} = useAuthStore()
 
-  useEffect(()=>{
+  useEffect(() => {
     checkAuth();
+  }, [])
 
-  },[])
-
-  useEffect(()=>{
+  useEffect(() => {
     const inAuthScreen = segments[0] === "(auth)";
-    const isSignedIn = user&&token;
+    const isSignedIn = user && token;
 
     if(!isSignedIn && !inAuthScreen) router.replace("/(auth)")
     else if(isSignedIn && inAuthScreen) router.replace("/(tabs)")
-   },[user,token,segments])
-
+  }, [user, token, segments])
 
   return (
-    
     <SafeAreaProvider>
-        <SafeScreen>
-        <Stack  screenOptions={{headerShown: false}}>
-         <Stack.Screen name="(tabs)" />
-         <Stack.Screen name="(auth)" />
-         </Stack>;
-        </SafeScreen>
-        
+      <SafeScreen>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="index" />
+          <Stack.Screen name="signup" />
+        </Stack>
         <StatusBar style='dark' />
-
-    
-  </SafeAreaProvider>)
-  
-  
-
-  
+      </SafeScreen>
+    </SafeAreaProvider>
+  );
 }
